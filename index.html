@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farewell 💙</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#89f7fe,#66a6ff);
+    overflow:hidden;
+}
+
+.card{
+    width:min(520px,92%);
+    padding:28px;
+    border-radius:24px;
+    background:rgba(255,255,255,.2);
+    backdrop-filter:blur(18px);
+    text-align:center;
+    box-shadow:0 10px 35px rgba(0,0,0,.2);
+}
+
+.message{
+    margin-top:16px;
+    padding:16px;
+    border-radius:16px;
+    background:rgba(255,255,255,.3);
+    font-size:17px;
+    white-space:pre-line;
+    max-height:70vh;
+    overflow:auto;
+}
+
+.btn{
+    margin-top:18px;
+    padding:12px 24px;
+    border:none;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:600;
+    background:linear-gradient(135deg,#ffd86b,#ffb347);
+}
+
+.gallery{
+    margin-top:22px;
+    display:grid;
+    gap:16px;
+}
+
+.memory-card{
+    background:rgba(255,255,255,.4);
+    border-radius:18px;
+    padding:8px;
+}
+
+.memory-card img{
+    width:100%;
+    border-radius:14px;
+}
+
+.memory-title{
+    font-size:15px;
+    margin-top:6px;
+    font-weight:600;
+}
+
+.confetti{
+    position:fixed;
+    font-size:22px;
+    top:-20px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="card">
+
+    <h2>👋 One Moment...</h2>
+
+    <div class="message" id="msg">
+        Something special is waiting 💫
+    </div>
+
+    <button class="btn" id="start">Start</button>
+
+</main>
+
+<audio id="music" src="farewell.mp3" preload="auto"></audio>
+
+<script>
+
+const msg = document.getElementById("msg");
+const start = document.getElementById("start");
+const music = document.getElementById("music");
+
+const memories = [
+    {
+        url: "https://your-image-1-url",
+        title: "Great Memories Together"
+    },
+    {
+        url: "https://your-image-2-url",
+        title: "Team Moments 💙"
+    }
+];
+
+function playMusic(){
+    music.play().catch(() => {});
+}
+
+function confetti(){
+    setInterval(() => {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.innerText = "🎉";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(c);
+
+        setTimeout(() => c.remove(), 6000);
+
+    }, 250);
+}
+
+function showGallery(){
+
+    let html = '<div class="gallery">';
+
+    memories.forEach(m => {
+        html += `
+            <div class="memory-card">
+                <img src="${m.url}" alt="">
+                <div class="memory-title">${m.title}</div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+
+    msg.innerHTML += html;
+}
+
+function firstStep(){
+
+    playMusic();
+
+    msg.innerText =
+`It's hard to say goodbye...
+
+But working with you has been an amazing journey 💙`;
+
+    start.innerText = "Continue";
+    start.onclick = secondStep;
+}
+
+function secondStep(){
+
+    msg.innerText =
+`Thank you for:
+
+✨ Your support
+✨ Your positivity
+✨ All the great memories
+
+You truly made this place better.`;
+
+    start.innerText = "Final Message";
+    start.onclick = finalStep;
+}
+
+function finalStep(){
+
+    start.style.display = "none";
+
+    msg.innerText =
+`We will miss you a lot!
+
+Wishing you success, happiness,
+and new achievements ahead 🚀
+
+Stay in touch and keep shining! ✨`;
+
+    confetti();
+    showGallery();
+}
+
+start.onclick = firstStep;
+
+</script>
+
+</body>
+</html>
