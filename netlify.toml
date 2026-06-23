@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/"
+  to = "/farewell.html"
+  status = 200
